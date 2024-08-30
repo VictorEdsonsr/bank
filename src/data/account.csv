@@ -1,0 +1,5 @@
+Name;birthDate;Active;Salary;Currency;
+Alice;30/02/1980;true;5000.47;USD;
+Bob;04/07/1993;false;4500.30;EUR;
+Charlie;23/04/2000;true;6000.32;JPY;
+Diana;20/01/1989;true;5200.42;R$

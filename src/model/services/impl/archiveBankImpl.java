@@ -4,18 +4,15 @@ import Utils.DateUtils;
 import model.entities.Account;
 import model.entities.Currency;
 import model.entities.Person;
-import model.services.getArchiveBank;
+import model.services.archiveBankInterface;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.List;
 
-public class archiveBankImpl implements getArchiveBank {
+public class archiveBankImpl implements archiveBankInterface {
 
     @Override
-    public void upload(List<Account> accountList, String path) {
+    public void getAccounts(List<Account> accountList, String path) {
         File accountData = new File(path);
 
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(accountData))){
@@ -52,5 +49,36 @@ public class archiveBankImpl implements getArchiveBank {
             );
             System.out.println();
         }
+    }
+
+    @Override
+    public void createAccount(Account account, String path) {
+        try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))){
+            bufferedWriter.write(account.getPerson().getName() + ";" + DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) + ";" + String.valueOf(account.getActive()) + ";" + String.valueOf(account.getSalary()) + ";" + String.valueOf(account.getCurrency()));
+            bufferedWriter.newLine();
+        }catch (IOException e){
+            e.getMessage();
+        }
+    }
+
+    @Override
+    public void updateAccount(String idName, Account account, String path) {
+        File accountData = new File(path);
+
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(accountData))){
+            String heaaders = bufferedReader.readLine();
+            String line;
+            while((line = bufferedReader.readLine()) != null){
+                if(line.contains(idName)){
+                    line = account.getPerson().getName() + ";" + DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) + ";" + String.valueOf(account.getActive()) + ";" + String.valueOf(account.getSalary()) + ";" + String.valueOf(account.getCurrency());
+                    break;
+                }
+
+            }
+        }catch (IOException e){
+            System.out.println("Capturamos um erro: " + e.getMessage());
+        }
+
+
     }
 }

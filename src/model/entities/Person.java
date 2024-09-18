@@ -1,19 +1,15 @@
 package model.entities;
-
-import Utils.DateUtils;
-
 import java.time.LocalDate;
 import java.time.Period;
 
 public class Person {
     private String name;
-    private Integer age;
+    private int age;
     private LocalDate birthDate;
 
-    public Person(String name, String birthDate) {
+    public Person(String name, LocalDate birthDate) {
         this.name = name;
-        this.birthDate = DateUtils.formatToLocalDate(birthDate);
-        this.age = Period.between(this.birthDate, LocalDate.now()).getYears();
+        this.birthDate = birthDate;
     }
 
     public String getName() {
@@ -24,16 +20,16 @@ public class Person {
         this.name = name;
     }
 
-    public Integer getAge() {
-        return age;
+    public int getAge() {
+        return age = Period.between(this.birthDate, LocalDate.now()).getYears();
     }
 
-    public void setAge(Integer age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    public String getBithDate() {
-        return DateUtils.formatToString(birthDate);
+    public LocalDate getBithDate() {
+        return birthDate;
     }
 
     public void setBithDate(LocalDate birthDate) {

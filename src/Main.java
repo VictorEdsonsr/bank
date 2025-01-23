@@ -19,6 +19,7 @@ public class Main {
         archiveBankInterface archiveBank = new archiveBankImpl();
         String path = "/home/victorreis/study/bank/src/data/account.csv";
         List<Account> accountList = new ArrayList<>();
+        String idName;
 
         System.out.println("SISTEMA BANCÁRIO");
 
@@ -53,10 +54,11 @@ public class Main {
                     break;
                 case 2:
                     archiveBank.getAccounts(accountList,path);
+                    break;
                 case 3:
                     sc.nextLine();
-                    System.out.println("Digite o nome de quem está procurando: ");
-                    String idName = sc.nextLine();
+                    System.out.println("Digite o nome para atualizar: ");
+                    idName = sc.nextLine();
 
                     System.out.println("ATUALIZAÇÃO DE CONTA");
                     System.out.print("Nome: ");
@@ -74,7 +76,14 @@ public class Main {
 
                     Account accountUpdated = new Account(personUpdated,Currency.valueOf(currencyUpdated),true,salaryUpdated);
 
-                    archiveBank.updateAccount(idName, accountUpdated, path);
+                    archiveBank.updateAccount(idName, accountUpdated, path );
+                    break;
+                case 4:
+                    sc.nextLine();
+                    System.out.println("Digite o nome de para deletar: ");
+                    idName = sc.nextLine();
+
+                    archiveBank.deleteAccount(idName,path);
                     break;
                 case 5:
                     System.out.println("Até a próxima!!");

@@ -1,12 +1,11 @@
 import Utils.DateUtils;
 import model.entities.Account;
-
-
 import model.entities.Currency;
 import model.entities.Person;
 import model.services.archiveBankInterface;
 import model.services.impl.archiveBankImpl;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -49,7 +48,10 @@ public class Main {
                     System.out.print("Tipo de Moeda (RS,USD,EUR,JPY):");
                     String currency = sc.next();
 
-                    Account account = new Account(person,Currency.valueOf(currency),true,salary);
+                    System.out.print("Conta ativa (S/N): ");
+                    char active = sc.next().charAt(0);
+
+                    Account account = new Account(person,Currency.valueOf(currency),(active == 'S'),salary);
                     archiveBank.createAccount(account,path);
                     System.out.println("Usuário cadastrado com sucesso!");
                     break;
@@ -75,7 +77,13 @@ public class Main {
                     System.out.print("Tipo de Moeda (RS,USD,EUR,JPY):");
                     String currencyUpdated = sc.next();
 
-                    Account accountUpdated = new Account(personUpdated,Currency.valueOf(currencyUpdated),true,salaryUpdated);
+                    System.out.print("Conta ativa (S/N): ");
+                    char activeUpdated = sc.next().charAt(0);
+
+                    Account accountUpdated = new Account(personUpdated,
+                            Currency.valueOf(currencyUpdated),
+                            (activeUpdated == 'S'),
+                            salaryUpdated);
 
                     archiveBank.updateAccount(idName, accountUpdated, path );
                     System.out.println("Usuario atualizado com sucesso!");

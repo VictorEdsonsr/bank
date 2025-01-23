@@ -51,6 +51,7 @@ public class Main {
 
                     Account account = new Account(person,Currency.valueOf(currency),true,salary);
                     archiveBank.createAccount(account,path);
+                    System.out.println("Usuário cadastrado com sucesso!");
                     break;
                 case 2:
                     archiveBank.getAccounts(accountList,path);
@@ -77,6 +78,7 @@ public class Main {
                     Account accountUpdated = new Account(personUpdated,Currency.valueOf(currencyUpdated),true,salaryUpdated);
 
                     archiveBank.updateAccount(idName, accountUpdated, path );
+                    System.out.println("Usuario atualizado com sucesso!");
                     break;
                 case 4:
                     sc.nextLine();
@@ -84,6 +86,7 @@ public class Main {
                     idName = sc.nextLine();
 
                     archiveBank.deleteAccount(idName,path);
+                    System.out.println("Usuário deletado com sucesso!");
                     break;
                 case 5:
                     System.out.println("Até a próxima!!");

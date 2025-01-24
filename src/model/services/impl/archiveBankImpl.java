@@ -41,25 +41,45 @@ public class archiveBankImpl implements archiveBankInterface {
         for(Account account : accountList){
             String active = account.getActive() ? "SIM" : "NÃO";
             String formatted = String.format("%.2f", account.getSalary()).replace(".", ",");
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("Nome: ");
+            sb.append(account.getPerson().getName());
+            sb.append(" - ");
+            sb.append("Idade: ");
+            sb.append(account.getPerson().getAge());
+            sb.append(" - ");
+            sb.append("Data de nascimento: ");
+            sb.append(DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()));
+            sb.append(" - ");
+            sb.append("Conta Ativa: ");
+            sb.append(active);
+            sb.append(" - ");
+            sb.append("Sálario: ");
+            sb.append(account.getCurrency());
+            sb.append(" ");
+            sb.append(formatted);
 
             System.out.println("DADOS DA CONTA:");
-            System.out.println("Nome: " + account.getPerson().getName() + " - " +
-                    "Idade: " + account.getPerson().getAge() + " - " +
-                    "Data de nascimento: " + DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) + " - " +
-                    "Conta Ativa: " + active + " - " +
-                    "Sálario: " + account.getCurrency() + " " + formatted
-            );
+            System.out.println( String.valueOf(sb));
             System.out.println();
         }
     }
 
     @Override
     public void createAccount(Account account, String path) {
+        StringBuilder sb = new StringBuilder();
         try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path, true))){
-            bufferedWriter.write(account.getPerson().getName() + ";" +
-                    DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) +
-                    ";" + String.valueOf(account.getActive()) + ";" + String.valueOf(account.getSalary()) +
-                    ";" + String.valueOf(account.getCurrency()));
+            sb.append(account.getPerson().getName());
+            sb.append(";");
+            sb.append(DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()));
+            sb.append(";");
+            sb.append(String.valueOf(account.getActive()));
+            sb.append(";");
+            sb.append(String.valueOf(account.getSalary()));
+            sb.append(";");
+            sb.append(String.valueOf(account.getCurrency()));
+            bufferedWriter.write(String.valueOf(sb));
             bufferedWriter.newLine();
         }catch (IOException e){
             e.getMessage();
@@ -102,13 +122,19 @@ public class archiveBankImpl implements archiveBankInterface {
             try(BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))){
                 bufferedWriter.write("Name;birthDate;Active;Salary;Currency;");
                 bufferedWriter.newLine();
+                StringBuilder sb = new StringBuilder();
                 for (Account account : accountList){
-                    bufferedWriter.write(account.getPerson().getName() + ";" +
-                            DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) +
-                            ";" + account.getActive() + ";" +
-                            account.getSalary() + ";" +
-                            account.getCurrency()
-                    );
+                    sb.append(account.getPerson().getName());
+                    sb.append(";");
+                    sb.append(DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()));
+                    sb.append(";");
+                    sb.append(String.valueOf(account.getActive()));
+                    sb.append(";");
+                    sb.append(String.valueOf(account.getSalary()));
+                    sb.append(";");
+                    sb.append(String.valueOf(account.getCurrency()));
+
+                    bufferedWriter.write(String.valueOf(sb));
                     bufferedWriter.newLine();
                 }
             }
@@ -148,13 +174,20 @@ public class archiveBankImpl implements archiveBankInterface {
             try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(path))) {
                 bufferedWriter.write("Name;birthDate;Active;Salary;Currency;");
                 bufferedWriter.newLine();
+
+                StringBuilder sb = new StringBuilder();
                 for (Account account : accountsFilterList) {
-                    bufferedWriter.write(account.getPerson().getName() + ";" +
-                            DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()) +
-                            ";" + account.getActive() + ";" +
-                            account.getSalary() + ";" +
-                            account.getCurrency()
-                    );
+                    sb.append(account.getPerson().getName());
+                    sb.append(";");
+                    sb.append(DateUtils.formatAndParseLocalDateToString(account.getPerson().getBithDate()));
+                    sb.append(";");
+                    sb.append(account.getActive());
+                    sb.append(";");
+                    sb.append(account.getSalary());
+                    sb.append(";");
+                    sb.append(account.getCurrency());
+
+                    bufferedWriter.write(String.valueOf(sb));
                     bufferedWriter.newLine();
                 }
             }
